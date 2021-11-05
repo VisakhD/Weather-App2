@@ -52,19 +52,31 @@ let weatherUrl = "https://api.openweathermap.org/data/2.5/weather?appid=d5d12596
             task.resume()
         }
     }
+    
+    func requestWith<RespondsTypeName:Codable>(url:String,responds:RespondsTypeName.Type,completion:@escaping (Result<RespondsTypeName,Error>)-> Void) {
+        if  let url = URL(string: url) {
+            let session  = URLSession(configuration:.default)
+            
+            let task = session.dataTask(with: url) { data, resp, error in
+                if error != nil {
+                    print(error!)
+                }
+                if let getdata = data {
+                    let decoder = JSONDecoder()
+                    do {
+                        let decodedData = try decoder.decode(RespondsTypeName.self, from: getdata)
+                        completion(.success(decodedData))
+                    } catch  {
+                        completion(.failure(error))
+                    }
+                }
+            }
+            task.resume()
+        }
+    }
 
     func parseJSON(weatherData : Data ) -> WeatherModel? {
-        let decoder = JSONDecoder()
-        do {
-            let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
-            let id = decodedData.weather[0].id
-            let temp = decodedData.main.temp
-            let name = decodedData.name
-            let weatherInfo = WeatherModel(conditionid: id, cityname: name, temperature: temp)
-            return weatherInfo
-        } catch  {
-            print(error)
-        }
+      
         return nil
     }
 

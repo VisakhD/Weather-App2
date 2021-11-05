@@ -33,7 +33,16 @@ class ViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         weatherTableView.reloadData()
-        cellObj.tableDelegate = self
+//        cellObj.tableDelegate = self
+        
+        weatherObj.requestWith(url: "https://api.openweathermap.org/data/2.5/weather?appid=d5d12596e43c663d81581d6ea4447ffb&units=metric&q=london", responds: WeatherData.self) { respondsResult in
+            switch respondsResult {
+            case .success(let weatherDataObj) :
+                 print(weatherDataObj)
+            case .failure(let error) :
+                print(error)
+            }
+        }
     }
 
     
@@ -71,13 +80,14 @@ extension ViewController : UITextFieldDelegate {
 extension ViewController : UITableViewDelegate ,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WeatherViewCell
-        cell.updateCell(index: indexPath.row)
+//        cell.updateCell(index: indexPath.row)
 //        weatherTableView.reloadData()
+        print(indexPath.row)
         return cell
     }
 }
@@ -106,7 +116,7 @@ extension ViewController : CLLocationManagerDelegate {
              print(lon)
             
             weatherObj.fetch(lat: lat, lon: lon)
-            weathertableobj.fetch(lat: lat, lon: lon)
+           
         }
     }
     
@@ -115,11 +125,12 @@ extension ViewController : CLLocationManagerDelegate {
     }
 }
 
-extension ViewController : TableDataDelegate {
-    func weatherDetails() {
-        weatherTableView.reloadData()
-        
-    }
-    
-    
-}
+//extension ViewController : TableDataDelegate {
+//    func weatherDetails() {
+//        weatherTableView.reloadData()
+//
+//    }
+//}
+
+
+
