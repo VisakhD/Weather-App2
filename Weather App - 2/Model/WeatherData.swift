@@ -8,7 +8,7 @@
 import Foundation
 
 
-
+//
 // MARK: - Welcome
 struct WeatherData: Codable {
     let coord: Coord
@@ -75,6 +75,20 @@ struct Wind: Codable {
 }
 
 
-
+//
+//struct WeatherData:Decodable {
+//    let name: String
+//    let weather: [Weather]
+//    let main: Main
+//}
+//
+//struct Weather:Decodable {
+//    let id: Int
+//    let weatherDescription : String
+//}
+//
+//struct Main:Decodable {
+//    let temp: Double
+//}
 
 

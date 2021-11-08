@@ -8,12 +8,15 @@
 import UIKit
 import CoreLocation
 
+
 class ViewController: UIViewController {
     
     var weatherObj = WeatherManager()
     let locationManager = CLLocationManager()
     var cellObj = WeatherViewCell()
     var weathertableobj = WeatherTable()
+    var weatherDailyObj : WeatherDataDaily?
+    var daily = [DailyStatus]()
     
     @IBOutlet weak var weatherTableView: WeatherTableViewController!
     @IBOutlet weak var cityLabel: UILabel!
@@ -33,7 +36,7 @@ class ViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         weatherTableView.reloadData()
-        cellObj.tableDelegate = self
+        weathertableobj.weatherManagerDelegate = self
     }
 
     
@@ -71,29 +74,37 @@ extension ViewController : UITextFieldDelegate {
 extension ViewController : UITableViewDelegate ,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return daily.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WeatherViewCell
-        cell.updateCell(index: indexPath.row)
-//        weatherTableView.reloadData()
+        cell.dayLabel.text = "\(daily[indexPath.row].day)"
+        cell.minTempLabel.text = "\(daily[indexPath.row].temperatureMinimum)"
+        cell.maxTempLabel.text = "\(daily[indexPath.row].temperratureMaximum)"
+        cell.weatherImageTable.image = UIImage(systemName: daily[indexPath.row].conditionName)
         return cell
     }
 }
 
 extension ViewController : WeatherDelegate {
+    func weatherInfo2(weatherDetails: WeatherDataDaily) {
+       
+       
+        let dailyStatus1 = DailyStatus(weatherDetails: weatherDetails)
+        daily.append(dailyStatus1)
+        DispatchQueue.main.async {
+            self.weatherTableView.reloadData()
+        }
+    }
+    
     func weatherInfo(weatherDetails: WeatherModel) {
         DispatchQueue.main.async {
             self.cityLabel.text = weatherDetails.cityname
             self.tempLabel.text = weatherDetails.temperatureString
             self.weatherImage.image = UIImage(systemName: weatherDetails.conditionName)
         }
-        
     }
-    
-    
-    
 }
 
 extension ViewController : CLLocationManagerDelegate {
@@ -115,11 +126,3 @@ extension ViewController : CLLocationManagerDelegate {
     }
 }
 
-extension ViewController : TableDataDelegate {
-    func weatherDetails() {
-        weatherTableView.reloadData()
-        
-    }
-    
-    
-}

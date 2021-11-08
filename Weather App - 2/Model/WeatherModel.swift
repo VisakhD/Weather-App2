@@ -38,43 +38,53 @@ struct WeatherModel {
     }
 }
 
+struct DailyStatus {
+    var dateInfo : Int
+    var temperatureMinimum : Double
+    var temperratureMaximum : Double
 
-//struct WeatherModel2 {
-//    let conditionid : Int
-//    let date : String
-//    let temperatureMin : Double
-//    let temperatureMax : Double
-//
-//    var tempStringMin : String {
-//        return String(format: "%.1f", temperatureMin)
-//    }
-//    var tempStringMax : String {
-//        return String(format: "%.1f", temperatureMax)
-//    }
-//
-//    var conditionName : String {
-//        switch conditionid {
-//        case 200...232:
-//            return "cloud.bolt.rain"
-//        case 300...321:
-//            return "cloud.drizzle"
-//        case 500...531:
-//            return "cloud.rain"
-//        case 600...622:
-//            return "cloud.snow"
-//        case 701...781:
-//            return "cloud.fog"
-//        case 800:
-//            return "sun.max"
-//        case 801...804:
-//            return "cloud.blot"
-//        default:
-//            return "cloud"
-//        }
-//    }
-//}
-
-
+    var conditionName : String
+    
+    var day : String
+    
+    init(weatherDetails: WeatherDataDaily) {
+        self.dateInfo = weatherDetails.daily[0].dt
+      
+        self.temperatureMinimum = weatherDetails.daily[0].temp.min
+        self.temperratureMaximum = weatherDetails.daily[0].temp.max
+        self.conditionName = "\(weatherDetails.daily[0].weather[0].id)"
+        
+        let date = Date(timeIntervalSinceReferenceDate: TimeInterval(dateInfo)) // DATE formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        let day = formatter.string(from: date)
+        self.day = day                           //
+        
+        let weatherImageDailyTable : Int
+        var conditionName : String {
+            switch weatherImageDailyTable {
+            case 200...232:
+                return "cloud.bolt.rain"
+            case 300...321:
+                return "cloud.drizzle"
+            case 500...531:
+                return "cloud.rain"
+            case 600...622:
+                return "cloud.snow"
+            case 701...781:
+                return "cloud.fog"
+            case 800:
+                return "sun.max"
+            case 801...804:
+                return "cloud.blot"
+            default:
+                return "cloud"
+            }
+        }
+        
+    }
+ 
+}
 
 
 

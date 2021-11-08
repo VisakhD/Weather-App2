@@ -11,10 +11,9 @@ import CoreLocation
 
 protocol WeatherDelegate {
     func weatherInfo(weatherDetails : WeatherModel)
+    func weatherInfo2(weatherDetails : WeatherDataDaily)
 }
-protocol WeatherDelegate2 {
-    func weatherInfo2(weatherDetails: WeatherDataDaily)
-}
+
 
 struct WeatherManager {
     
@@ -73,10 +72,10 @@ let weatherUrl = "https://api.openweathermap.org/data/2.5/weather?appid=d5d12596
 
 struct WeatherTable {
     
-    let weatherUrlTable = "https://api.openweathermap.org/data/2.5/onecall?exclude=current,hourly,minutely,alerts&appid=d5d12596e43c663d81581d6ea4447ffb"
+    let weatherUrlTable = "https://api.openweathermap.org/data/2.5/onecall?exclude=current,hourly,minutely,alerts&appid=d5d12596e43c663d81581d6ea4447ffb&units=metric"
     
     
-    var  weatherObjDelegate : WeatherDelegate2?
+    var  weatherManagerDelegate : WeatherDelegate?
     
     func fetch(lat:CLLocationDegrees, lon: CLLocationDegrees){
         
@@ -95,7 +94,7 @@ struct WeatherTable {
                 }
                 if let getdata = data {
                     let weather = parseJSON(weatherData: getdata)
-                    weatherObjDelegate?.weatherInfo2(weatherDetails: weather!)
+                    weatherManagerDelegate?.weatherInfo2(weatherDetails: weather!)
                 }
             }
             task.resume()

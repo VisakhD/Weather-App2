@@ -71,3 +71,24 @@ struct Weathers: Codable {
         case icon
     }
 }
+
+
+//struct WeatherDataDaily:Decodable {
+//    let daily: [Daily]
+//}
+//
+//struct Daily:Decodable {
+//    let dt: Int
+//    let temp: Temp
+//    let weather: [Weathers]
+//}
+//
+//struct Temp: Decodable {
+//    let min: Double
+//    let max: Double
+//}
+//
+//struct Weathers: Decodable {
+//    let id: Int
+//    let weatherDescription: String
+//}
