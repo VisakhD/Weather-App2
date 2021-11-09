@@ -11,12 +11,13 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
+    //    Objects & refferences of the classes
     var weatherObj = WeatherManager()
     let locationManager = CLLocationManager()
     var cellObj = WeatherViewCell()
     var weathertableobj = WeatherTable()
     var weatherDailyObj : WeatherDataDaily?
-    var daily = [DailyStatus]()
+    var daily = [DailyStatus]()   // array to store the decoded data to show in the table
     
     @IBOutlet weak var weatherTableView: WeatherTableViewController!
     @IBOutlet weak var cityLabel: UILabel!
@@ -24,7 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var searchField: UITextField!
     
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,15 +39,16 @@ class ViewController: UIViewController {
         weatherTableView.reloadData()
         weathertableobj.weatherManagerDelegate = self
     }
-
     
-    @IBAction func navigationButton(_ sender: UIButton) {
+    
+    @IBAction func navigationButton(_ sender: UIButton) { // button for updating the current location of the app
         locationManager.requestLocation()
         
     }
-    
-    
 }
+
+//MARK: - Text Field Delegate
+
 extension ViewController : UITextFieldDelegate {
     
     @IBAction func searchFieldButton(_ sender: UIButton) {
@@ -69,8 +71,12 @@ extension ViewController : UITextFieldDelegate {
         weatherObj.fetch(cityName: searchField.text!)
     }
     
-   
+    
 }
+
+//MARK: - Table View Delegate
+
+
 extension ViewController : UITableViewDelegate ,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -87,13 +93,15 @@ extension ViewController : UITableViewDelegate ,UITableViewDataSource {
     }
 }
 
+//MARK: - Weather Delegate
+
 extension ViewController : WeatherDelegate {
     func weatherInfo2(weatherDetails: WeatherDataDaily) {
-       
-      
+        
+        for elem in daily{
         let dailyStatus1 = DailyStatus(weatherDetails: weatherDetails)
         daily.append(dailyStatus1)
-        
+        }
         DispatchQueue.main.async {
             self.weatherTableView.reloadData()
         }
@@ -108,14 +116,16 @@ extension ViewController : WeatherDelegate {
     }
 }
 
+//MARK: - CLLocation Manager Delegate
+
 extension ViewController : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
-             print(lat)
-             print(lon)
+            print(lat)
+            print(lon)
             
             weatherObj.fetch(lat: lat, lon: lon)
             weathertableobj.fetch(lat: lat, lon: lon)

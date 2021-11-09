@@ -7,6 +7,10 @@
 
 import Foundation
 
+//MARK: - Model for Weather Manager
+
+
+
 struct WeatherModel {
     let conditionid : Int
     let cityname : String
@@ -38,6 +42,10 @@ struct WeatherModel {
     }
 }
 
+//MARK: - Model for Weather Table View
+
+
+
 struct DailyStatus {
     var dateInfo : Int
     var temperatureMinimum : Double
@@ -45,25 +53,27 @@ struct DailyStatus {
     let  weatherImageDailyTable : Int
     var day : String
     var conditionName : String {
-     switch weatherImageDailyTable {
-     case 200...232:
-         return "cloud.bolt.rain"
-     case 300...321:
-         return "cloud.drizzle"
-     case 500...531:
-         return "cloud.rain"
-     case 600...622:
-         return "cloud.snow"
-     case 701...781:
-         return "cloud.fog"
-     case 800:
-         return "sun.max"
-     case 801...804:
-         return "cloud.blot"
-     default:
-         return "cloud"
-     }
- }
+        switch weatherImageDailyTable {
+        case 200...232:
+            return "cloud.bolt.rain"
+        case 300...321:
+            return "cloud.drizzle"
+        case 500...531:
+            return "cloud.rain"
+        case 600...622:
+            return "cloud.snow"
+        case 701...781:
+            return "cloud.fog"
+        case 800:
+            return "sun.max"
+        case 801...804:
+            return "cloud.blot"
+        default:
+            return "cloud"
+        }
+    }
+    
+    //    initilising decoded  data from weather table to table view
     
     init(weatherDetails: WeatherDataDaily) {
         self.dateInfo = weatherDetails.daily[0].dt
@@ -77,16 +87,16 @@ struct DailyStatus {
         formatter.dateFormat = "EEEE"
         let day = formatter.string(from: date)
         self.day = day                           //
-       
-        
-    
-
         
         
-           
+        
+        
+        
+        
+        
         
     }
- 
+    
 }
 
 

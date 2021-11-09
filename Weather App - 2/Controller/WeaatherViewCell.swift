@@ -12,8 +12,8 @@ protocol TableDataDelegate {
 }
 
 class WeatherViewCell: UITableViewCell {
-
-
+    
+    
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var minTempLabel: UILabel!
     @IBOutlet weak var weatherImageTable: UIImageView!
@@ -23,15 +23,15 @@ class WeatherViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    
+        
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-
+        
+        
     }
-
-   
+    
+    
 }
 
