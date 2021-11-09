@@ -92,8 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				325D7E8A2732B1A80053725A /* ViewController.swift */,
-				325D7EA02732B43D0053725A /* WeatherTableViewController.swift */,
-				325D7EA42732B4EB0053725A /* WeaatherViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -101,6 +99,8 @@
 		325D7E9C2732B24A0053725A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				325D7EA02732B43D0053725A /* WeatherTableViewController.swift */,
+				325D7EA42732B4EB0053725A /* WeaatherViewCell.swift */,
 				325D7E8C2732B1A80053725A /* Main.storyboard */,
 			);
 			path = Views;

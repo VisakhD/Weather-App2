@@ -31,7 +31,12 @@ class WeatherViewCell: UITableViewCell {
         
         
     }
-    
+    func configureCell(data :DailyStatus ) {
+        self.dayLabel.text = "\(data.day)"
+        self.minTempLabel.text = "\(data.temperatureMinimum)"
+        self.maxTempLabel.text = "\(data.temperratureMaximum)"
+        self.weatherImageTable.image = UIImage(systemName: "\(data.conditionName)")
+    }
     
 }
 

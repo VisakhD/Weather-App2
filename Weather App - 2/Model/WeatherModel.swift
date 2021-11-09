@@ -87,16 +87,23 @@ struct DailyStatus {
         formatter.dateFormat = "EEEE"
         let day = formatter.string(from: date)
         self.day = day                           //
-        
-        
-        
-        
-        
-        
-        
-        
+   
     }
     
+    init(weatherDetails: Daily) {
+        self.dateInfo = weatherDetails.dt
+        
+        self.temperatureMinimum = weatherDetails.temp.min
+        self.temperratureMaximum = weatherDetails.temp.max
+        self.weatherImageDailyTable = weatherDetails.weather[0].id
+        
+        let date = Date(timeIntervalSinceReferenceDate: TimeInterval(dateInfo)) // DATE formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        let day = formatter.string(from: date)
+        self.day = day                           //
+   
+    }
 }
 
 

@@ -85,10 +85,8 @@ extension ViewController : UITableViewDelegate ,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! WeatherViewCell
-        cell.dayLabel.text = "\(daily[indexPath.row].day)"
-        cell.minTempLabel.text = "\(daily[indexPath.row].temperatureMinimum)"
-        cell.maxTempLabel.text = "\(daily[indexPath.row].temperratureMaximum)"
-        cell.weatherImageTable.image = UIImage(systemName: "\(daily[indexPath.row].conditionName)")
+        let data = daily[indexPath.row]
+        cell.configureCell(data: data)
         return cell
     }
 }
@@ -98,8 +96,9 @@ extension ViewController : UITableViewDelegate ,UITableViewDataSource {
 extension ViewController : WeatherDelegate {
     func weatherInfo2(weatherDetails: WeatherDataDaily) {
         
-        for elem in daily{
-        let dailyStatus1 = DailyStatus(weatherDetails: weatherDetails)
+        for elemts in weatherDetails.daily {
+      
+        let dailyStatus1 = DailyStatus(weatherDetails: elemts)
         daily.append(dailyStatus1)
         }
         DispatchQueue.main.async {
@@ -136,4 +135,5 @@ extension ViewController : CLLocationManagerDelegate {
         print(error)
     }
 }
+
 
