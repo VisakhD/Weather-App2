@@ -82,7 +82,7 @@ extension ViewController : UITableViewDelegate ,UITableViewDataSource {
         cell.dayLabel.text = "\(daily[indexPath.row].day)"
         cell.minTempLabel.text = "\(daily[indexPath.row].temperatureMinimum)"
         cell.maxTempLabel.text = "\(daily[indexPath.row].temperratureMaximum)"
-        cell.weatherImageTable.image = UIImage(systemName: daily[indexPath.row].conditionName)
+        cell.weatherImageTable.image = UIImage(systemName: "\(daily[indexPath.row].conditionName)")
         return cell
     }
 }
@@ -90,9 +90,10 @@ extension ViewController : UITableViewDelegate ,UITableViewDataSource {
 extension ViewController : WeatherDelegate {
     func weatherInfo2(weatherDetails: WeatherDataDaily) {
        
-       
+      
         let dailyStatus1 = DailyStatus(weatherDetails: weatherDetails)
         daily.append(dailyStatus1)
+        
         DispatchQueue.main.async {
             self.weatherTableView.reloadData()
         }
