@@ -69,6 +69,7 @@ extension ViewController : UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         weatherObj.fetch(cityName: searchField.text!)
+        searchField.text = ""
     }
     
     
